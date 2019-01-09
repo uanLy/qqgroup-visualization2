@@ -1,7 +1,17 @@
 
 <!--局部样式-->
 <style scoped>
+    .viewGraph2dIndex {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
 
+    .zoomLayer {
+
+    }
 </style>
 
 <!--全局局部覆盖样式-->
@@ -10,19 +20,27 @@
 </style>
 
 <template>
-    <div class="">
+    <div class="viewGraph2dIndex">
+        <div class="zoomLayer">
+            测试
+        </div>
     </div>
 </template>
 
 <script>
+    import * as d3 from "d3";
+
     export default {
-        name: "",
+        name: "viewGraph2dIndex",
         props: {
 
         },
         data () {
             return {
                 //#region 页面对象
+                    $d_graph: null,
+                    $d_zoomLayer: null,
+                    $d_g: null,
                 //#endregion
 
                 //#region 页面内容绑定数据
@@ -62,13 +80,31 @@
             //#endregion
 
             //#region 其他方法
+                graphZoomed () {
+                    this.$d_zoomLayer.attr("style", `
+                        transform: scale(${ d3.event.transform.k }) translate(${ d3.event.transform.x }px, ${ d3.event.transform.y }px);
+                        transform-origin: 50% 50%;
+                    `);
+                },
+
+                initGraph () {
+                    let zoom = d3.zoom().on("zoom", this.graphZoomed);
+                    // 修改缩放幅度
+                    zoom.wheelDelta(() => {
+                        return -d3.event.deltaY * (d3.event.deltaMode ? 120 : 1) / 10000;
+                    });
+                    this.$d_graph = d3.select(this.$el);
+                    this.$d_zoomLayer = this.$d_graph.select(".zoomLayer");
+                    this.$d_graph.call(zoom);
+                    // this.$d_zoomLayer.selectAll("div").data([1, 2, 3]).enter().append("div").text(d => d);
+                },
             //#endregion
         },
         created () {
 
         },
         mounted () {
-
+            this.initGraph();
         },
         components: {
 
