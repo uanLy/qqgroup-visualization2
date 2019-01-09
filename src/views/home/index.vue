@@ -1,50 +1,25 @@
 
 <!--局部样式-->
 <style scoped>
-    #app {
-        width: 100%;
-        height: 100%;
-    }
-    .myHeader {
-        padding: 0px 30px 0px 30px;
-        background-color: #333;
-        color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .myHeader > span {
-        font-size: 24px;
-    }
-    .myMain {
-        padding: 0px!important;
+    .viewHomeIndex {
+
     }
 </style>
 
 <!--全局局部覆盖样式-->
 <style>
-    html, body {
-        margin: 0px;
-        padding: 0px;
-        width: 100%;
-        height: 100%;
-    }
+
 </style>
 
 <template>
-    <el-container id="app">
-        <el-header height="50px" class="myHeader">
-            <span>Test</span>
-        </el-header>
-        <el-main class="myMain">
-            <router-view></router-view>
-        </el-main>
-    </el-container>
+    <div class="viewHomeIndex">
+        主页
+    </div>
 </template>
 
 <script>
     export default {
-        name: "",
+        name: "viewHomeIndex",
         props: {
 
         },
