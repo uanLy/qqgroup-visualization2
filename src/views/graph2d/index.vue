@@ -7,6 +7,9 @@
         left: 0px;
         right: 0px;
         bottom: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .zoomLayer {
