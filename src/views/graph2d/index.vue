@@ -10,7 +10,7 @@
     }
 
     .zoomLayer {
-
+        display: inline-block;
     }
 </style>
 
@@ -41,6 +41,10 @@
                     $d_graph: null,
                     $d_zoomLayer: null,
                     $d_g: null,
+
+                    zoomX: 0,
+                    zoomY: 0,
+                    zoomK: 1,
                 //#endregion
 
                 //#region 页面内容绑定数据
@@ -81,8 +85,16 @@
 
             //#region 其他方法
                 graphZoomed () {
+                    let eventType = d3.event.sourceEvent.type;
+                    if (eventType == "wheel") {
+                        this.zoomK = d3.event.transform.k;
+                    }
+                    else if (eventType == "mousemove") {
+                        this.zoomX = d3.event.transform.x;
+                        this.zoomY = d3.event.transform.y;
+                    }
                     this.$d_zoomLayer.attr("style", `
-                        transform: scale(${ d3.event.transform.k }) translate(${ d3.event.transform.x }px, ${ d3.event.transform.y }px);
+                        transform: scale(${ this.zoomK }) translate(${ this.zoomX / this.zoomK }px, ${ this.zoomY / this.zoomK }px);
                         transform-origin: 50% 50%;
                     `);
                 },
@@ -91,7 +103,7 @@
                     let zoom = d3.zoom().on("zoom", this.graphZoomed);
                     // 修改缩放幅度
                     zoom.wheelDelta(() => {
-                        return -d3.event.deltaY * (d3.event.deltaMode ? 120 : 1) / 10000;
+                        return -d3.event.deltaY * (d3.event.deltaMode ? 120 : 1) / 1000;
                     });
                     this.$d_graph = d3.select(this.$el);
                     this.$d_zoomLayer = this.$d_graph.select(".zoomLayer");

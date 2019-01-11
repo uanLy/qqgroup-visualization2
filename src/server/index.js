@@ -64,7 +64,7 @@ async function main () {
         let router = new KoaRouter();
 
         //根据QQ号查询关系图接口
-        router.get("/qqgroup3d/api/qq/:num", async (ctx, next) => {
+        router.get("/api/qq/:num", async (ctx, next) => {
             try {
                 let qqNum = Number(ctx.params.num);
                 let result = await pool.request()
@@ -88,7 +88,7 @@ async function main () {
         });
 
         //根据QQ号二次迭代查询关系图接口
-        router.get("/qqgroup3d/api/qqext/:num", async (ctx, next) => {
+        router.get("/api/qqext/:num", async (ctx, next) => {
             try {
                 let qqNum = Number(ctx.params.num);
                 let result = await pool.request()
@@ -112,7 +112,7 @@ async function main () {
         });
 
         //根据群号查询关系图接口
-        router.get("/qqgroup3d/api/group/:num", async (ctx, next) => {
+        router.get("/api/group/:num", async (ctx, next) => {
             try {
                 let groupNum = Number(ctx.params.num);
                 let result = await pool.request()
@@ -136,7 +136,7 @@ async function main () {
         });
 
         //QQ信息表查询接口
-        router.get("/qqgroup3d/api/qqtable/:num", async (ctx, next) => {
+        router.get("/api/qqtable/:num", async (ctx, next) => {
             try {
                 let qqNum = Number(ctx.params.num);
                 let result = await pool.request()
@@ -156,7 +156,7 @@ async function main () {
         });
 
         //群信息表查询接口
-        router.get("/qqgroup3d/api/grouptable/:num", async (ctx, next) => {
+        router.get("/api/grouptable/:num", async (ctx, next) => {
             try {
                 let groupNum = Number(ctx.params.num);
                 let result = await pool.request()
@@ -178,7 +178,7 @@ async function main () {
             }
         });
 
-        router.get("/qqgroup3d/api/querylog", async (ctx, next) => {
+        router.get("/api/querylog", async (ctx, next) => {
             try {
                 let fileContent = fs.readFileSync("log.txt").toString();
                 let logList = fileContent.split("\n").map(item => item.trim()).filter(item => item).map(text => {
