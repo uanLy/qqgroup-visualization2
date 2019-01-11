@@ -7,9 +7,6 @@
         left: 0px;
         right: 0px;
         bottom: 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .zoomLayer {
@@ -48,6 +45,9 @@
                     zoomX: 0,
                     zoomY: 0,
                     zoomK: 1,
+
+                    event: "",
+                    zoomBak: 1,
                 //#endregion
 
                 //#region 页面内容绑定数据
@@ -91,14 +91,20 @@
                     let eventType = d3.event.sourceEvent.type;
                     if (eventType == "wheel") {
                         this.zoomK = d3.event.transform.k;
+                        this.event = eventType;
                     }
                     else if (eventType == "mousemove") {
+                        if (this.event != "mousemove") {
+                            console.log("偏差: ", d3.event.transform.k - this.zoomBak);
+                            this.zoomBak = d3.event.transform.k;
+                        }
                         this.zoomX = d3.event.transform.x;
                         this.zoomY = d3.event.transform.y;
+                        this.event = eventType;
                     }
+                    console.log(this.zoomX, this.zoomY);
                     this.$d_zoomLayer.attr("style", `
                         transform: scale(${ this.zoomK }) translate(${ this.zoomX / this.zoomK }px, ${ this.zoomY / this.zoomK }px);
-                        transform-origin: 50% 50%;
                     `);
                 },
 
