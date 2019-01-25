@@ -88,23 +88,12 @@
 
             //#region 其他方法
                 graphZoomed () {
-                    let eventType = d3.event.sourceEvent.type;
-                    if (eventType == "wheel") {
-                        this.zoomK = d3.event.transform.k;
-                        this.event = eventType;
-                    }
-                    else if (eventType == "mousemove") {
-                        if (this.event != "mousemove") {
-                            console.log("偏差: ", d3.event.transform.k - this.zoomBak);
-                            this.zoomBak = d3.event.transform.k;
-                        }
-                        this.zoomX = d3.event.transform.x;
-                        this.zoomY = d3.event.transform.y;
-                        this.event = eventType;
-                    }
-                    console.log(this.zoomX, this.zoomY);
+                    let k = d3.event.transform.k;
+                    let x = d3.event.transform.x;
+                    let y = d3.event.transform.y;
                     this.$d_zoomLayer.attr("style", `
-                        transform: scale(${ this.zoomK }) translate(${ this.zoomX / this.zoomK }px, ${ this.zoomY / this.zoomK }px);
+                        transform: scale(${ k }) translate(${ x / k }px, ${ y / k }px);
+                        transform-origin: center, center;
                     `);
                 },
 
@@ -112,7 +101,7 @@
                     let zoom = d3.zoom().on("zoom", this.graphZoomed);
                     // 修改缩放幅度
                     zoom.wheelDelta(() => {
-                        return -d3.event.deltaY * (d3.event.deltaMode ? 120 : 1) / 1000;
+                        return -d3.event.deltaY * (d3.event.deltaMode ? 120 : 1) / 3200;
                     });
                     this.$d_graph = d3.select(this.$el);
                     this.$d_zoomLayer = this.$d_graph.select(".zoomLayer");
