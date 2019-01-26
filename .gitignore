@@ -22,3 +22,5 @@ yarn-error.log*
 
 /db.json
 /log.txt
+/yarn.lock
+/qqgroup.db

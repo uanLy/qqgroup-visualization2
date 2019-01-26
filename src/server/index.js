@@ -6,6 +6,10 @@ const Moment = require("moment");
 const colors = require("colors");
 const fs = require("fs");
 
+const SQLite3 = require("sqlite3").verbose();
+const db = new SQLite3.Database("./qqgroup.db");
+
+
 //服务端端口
 const serverPort = 10241;
 //数据库连接配置信息
@@ -57,7 +61,7 @@ function holdFuck (ctx, next) {
 }
 
 //主函数
-async function main () {
+async function main1 () {
     try {
         let pool = await MSSQL.connect(config);
         let app = new Koa();
@@ -223,4 +227,22 @@ async function main () {
     }
 }
 
+// main1();
+
+const sql = require("./sql");
+
+async function main () {
+    console.log(1);
+
+    db.exec(sql.queryQQGraphSQL, (e, result) => {
+        console.log(e);
+        console.log(result);
+        db.close(e => {
+            process.exit(0);
+        });
+    });
+}
+
 main();
+
+
