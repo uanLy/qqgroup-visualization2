@@ -6,8 +6,6 @@ const Moment = require("moment");
 const colors = require("colors");
 const fs = require("fs");
 
-const SQLite3 = require("sqlite3").verbose();
-const db = new SQLite3.Database("./qqgroup.db");
 
 
 //服务端端口
@@ -229,18 +227,12 @@ async function main1 () {
 
 // main1();
 
-const sql = require("./sql");
+const dal = require("./dal");
 
 async function main () {
-    console.log(1);
-
-    db.exec(sql.queryQQGraphSQL, (e, result) => {
-        console.log(e);
-        console.log(result);
-        db.close(e => {
-            process.exit(0);
-        });
-    });
+    let result = await dal.queryGroupTable(63128699);
+    console.log(result);
+    await dal.close();
 }
 
 main();

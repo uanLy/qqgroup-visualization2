@@ -2,7 +2,7 @@
 // 查询SQL
 module.exports =  {
     queryQQGraphSQL: {
-        groupNode: `
+        groupNodes: `
             select
                 groupNum as 'nodeGroupNum',
                 mast as 'nodeMast',
@@ -16,7 +16,7 @@ module.exports =  {
                 a.groupNum is not NULL and
                 a.qqNum = ?
         `,
-        memberNode: `
+        memberNodes: `
             select distinct
                 a.qqNum as 'nodeQQNum'
             from
@@ -24,7 +24,7 @@ module.exports =  {
             where
                 a.qqNum = ?
         `,
-        link: `
+        links: `
             select
                 qqNum as 'linkQQNum',
                 nick as 'linkNick',
@@ -39,7 +39,7 @@ module.exports =  {
         `,
     },
     queryGroupGraphSQL: {
-        groupNode: `
+        groupNodes: `
             select distinct
                 groupNum as 'nodeGroupNum',
                 mast as 'nodeMast',
@@ -52,7 +52,7 @@ module.exports =  {
             where
                 a.groupNum = ?
         `,
-        memberNode: `
+        memberNodes: `
             select
                 qqNum as 'nodeQQNum'
             from
@@ -60,7 +60,7 @@ module.exports =  {
             where
                 a.groupNum = ?
         `,
-        link: `
+        links: `
             select
                 qqNum as 'linkQQNum',
                 nick as 'linkNick',
@@ -75,7 +75,7 @@ module.exports =  {
         `,
     },
     queryQQExtGraphSQL: {
-        groupNode: `
+        groupNodes: `
             select distinct
                 joinGroupNum as 'nodeGroupNum',
                 joinMast as 'nodeMast',
@@ -89,7 +89,7 @@ module.exports =  {
                 a.joinGroupNum is not NULL and
                 a.targetQQNum = ?
         `,
-        memberNode: `
+        memberNodes: `
             select distinct
                 memberQQNum as 'nodeQQNum'
             from
@@ -98,7 +98,7 @@ module.exports =  {
                 a.memberQQNum is not NULL and
                 a.targetQQNum = ?
         `,
-        link: `
+        links: `
             select
                 memberQQNum as 'linkQQNum',
                 memberNick as 'linkNick',
